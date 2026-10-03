@@ -1,0 +1,74 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Blue Top",
+      "price": "Rs. 500",
+      "category": "Tops",
+      "brand": "Polo"
+    },
+    {
+      "id": 2,
+      "name": "Men Tshirt",
+      "price": "Rs. 400",
+      "category": "Tshirts",
+      "brand": "H&M"
+    },
+    {
+      "id": 3,
+      "name": "Sleeveless Dress",
+      "price": "Rs. 1000",
+      "category": "Dress",
+      "brand": "Madame"
+    },
+    {
+      "id": 4,
+      "name": "Stylish Dress",
+      "price": "Rs. 1500",
+      "category": "Dress",
+      "brand": "Madame"
+    },
+    {
+      "id": 5,
+      "name": "Winter Top",
+      "price": "Rs. 600",
+      "category": "Tops",
+      "brand": "Mast & Harbour"
+    },
+    {
+      "id": 6,
+      "name": "Summer White Top",
+      "price": "Rs. 400",
+      "category": "Tops",
+      "brand": "H&M"
+    },
+    {
+      "id": 7,
+      "name": "Madame Top For Women",
+      "price": "Rs. 1000",
+      "category": "Tops",
+      "brand": "Madame"
+    },
+    {
+      "id": 8,
+      "name": "Fancy Green Top",
+      "price": "Rs. 700",
+      "category": "Tops",
+      "brand": "Polo"
+    },
+    {
+      "id": 11,
+      "name": "Sleeves Printed Top - White",
+      "price": "Rs. 499",
+      "category": "Tops & Shirts",
+      "brand": "Babyhug"
+    },
+    {
+      "id": 12,
+      "name": "Half Sleeves Top Schiffli Detailing - Pink",
+      "price": "Rs. 359",
+      "category": "Tops & Shirts",
+      "brand": "Babyhug"
+    }
+  ]
+}
