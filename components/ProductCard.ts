@@ -9,12 +9,20 @@ export class ProductCard {
         this.textContainer = this.productCart.locator(".productinfo.text-center")
     }
 
-    async gemName(): Promise<string | null> {
-        return await this.textContainer.locator("p").textContent()
+    async getName(): Promise<string> {
+        const result = await this.textContainer.locator("p").textContent();
+        if (!result) {
+            throw new Error(`Could not find name`)
+        }
+        return result
     }
 
-    async getPrice(): Promise<string | null> {
-        return await this.textContainer.locator("h2").textContent()
+    async getPrice(): Promise<string> {
+        const result =  await this.textContainer.locator("h2").textContent()
+        if (!result) {
+            throw new Error(`Could not find price`)
+        }
+        return result
     }
 
     async addToCart(): Promise<void> {
