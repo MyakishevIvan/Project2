@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 
-class Footer {
+export class Footer {
     private readonly page: Page;
     private readonly subscribeInput: Locator
     private readonly subscribeButton: Locator

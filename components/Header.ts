@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 
-class Header {
+export class Header {
     private readonly homeButton: Locator
     private readonly productsButton: Locator
     private readonly cartButton: Locator
