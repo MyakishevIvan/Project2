@@ -1,7 +1,7 @@
 import {ProductCard} from "../components/ProductCard";
 import {Locator, Page} from "@playwright/test";
 
-class ProductsPage {
+export class ProductsPage {
     private readonly page: Page;
     private readonly searchInput: Locator
     private readonly productElements: Locator

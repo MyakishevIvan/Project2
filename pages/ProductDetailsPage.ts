@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 
-class ProductDetailsPage {
+export class ProductDetailsPage {
     private readonly page: Page;
     private readonly itemCard: Locator
     private readonly reviewForm: Locator
