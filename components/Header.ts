@@ -8,6 +8,7 @@ export class Header {
     private readonly loggedInUser: Locator
     private readonly loggedInUsername: Locator
     private readonly logoutButton: Locator
+    private readonly deleteAccountButton: Locator
     private readonly page: Page
 
 
@@ -20,6 +21,7 @@ export class Header {
         this.loggedInUser = this.page.getByRole("link", { name: "Logged in as " });
         this.loggedInUsername = this.loggedInUser.locator('b');
         this.logoutButton = this.page.getByRole("link", { name: "Logout" });
+        this.deleteAccountButton = this.page.getByRole("link", { name: "Delete Account" });
     }
 
     async openHome(): Promise<void> {
@@ -42,11 +44,23 @@ export class Header {
         return this.loggedInUser.isVisible();
     }
 
-    async getLoggedInUsername(): Promise<string| null> {
-        return this.loggedInUsername.textContent()
+    async isLoggedInAs(username: string): Promise<boolean> {
+        if (!await this.isUserLoggedIn()) {
+            throw new Error(`User not logged`);
+        }
+
+        return await this.getLoggedInUsername() === username;
+    }
+
+    async getLoggedInUsername(): Promise<string> {
+        return this.loggedInUsername.innerText()
     }
 
     async logout(): Promise<void> {
         await this.logoutButton.click()
+    }
+
+    async deleteAccount(): Promise<void> {
+        await this.deleteAccountButton.click()
     }
 }

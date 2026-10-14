@@ -1,6 +1,7 @@
 import {Download, Locator, Page} from "@playwright/test";
 import {CardDetails} from "../components/CardDetails";
-class CheckoutPage {
+
+export class CheckoutPage {
     private readonly page: Page;
     private readonly items: Locator;
     private readonly address: Locator;
@@ -102,7 +103,7 @@ class CheckoutPage {
     }
 
     async getOrderSuccessMessage(): Promise<string> {
-        await this.successMessage.waitFor({ state: "visible" });
+        await this.successMessage.waitFor({state: "visible"});
         return await this.successMessage.innerText();
     }
 
