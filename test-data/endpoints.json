@@ -1,0 +1,46 @@
+{
+  "getProducts": {
+    "method": "GET",
+    "endpoint": "/api/productsList"
+  },
+  "postProducts": {
+    "method": "POST",
+    "endpoint": "/api/productsList"
+  },
+  "getBrands": {
+    "method": "GET",
+    "endpoint": "/api/brandsList"
+  },
+  "putBrands": {
+    "method": "PUT",
+    "endpoint": "/api/brandsList"
+  },
+  "searchProducts": {
+    "method": "POST",
+    "endpoint": "/api/searchProduct"
+  },
+  "verifyLogin": {
+    "method": "POST",
+    "endpoint": "/api/verifyLogin"
+  },
+  "deleteVerifyLogin": {
+    "method": "DELETE",
+    "endpoint": "/api/verifyLogin"
+  },
+  "createAccount": {
+    "method": "POST",
+    "endpoint": "/api/createAccount"
+  },
+  "deleteAccount": {
+    "method": "DELETE",
+    "endpoint": "/api/deleteAccount"
+  },
+  "updateAccount": {
+    "method": "PUT",
+    "endpoint": "/api/updateAccount"
+  },
+  "getUserDetail": {
+    "method": "GET",
+    "endpoint": "/api/getUserDetailByEmail"
+  }
+}
