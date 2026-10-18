@@ -2,7 +2,7 @@ import {ApiClient} from "./ApiClient";
 import {EndpointName} from "../enums/EndpointName";
 import {APIResponse} from "@playwright/test";
 
-class ProductsApi {
+export class ProductsApi {
 
     constructor(private readonly apiClient: ApiClient) {
     }

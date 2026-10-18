@@ -4,7 +4,7 @@ import {EndpointName} from "../enums/EndpointName";
 import {UserLogin} from "../types/UserLogin";
 import {User} from "../types";
 
-class AccountApi{
+export class AccountApi{
     constructor(private readonly apiClient: ApiClient) {
     }
 
