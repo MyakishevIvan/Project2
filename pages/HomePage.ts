@@ -14,7 +14,7 @@ export class HomePage {
     }
 
     async open(): Promise<void> {
-        await this.header.openHome()
+            await this.page.goto('/');
     }
 
     async subscribe(email: string): Promise<void> {
