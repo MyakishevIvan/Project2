@@ -18,7 +18,7 @@ export class Header {
         this.productsButton = this.page.getByRole("link", { name: "Products" });
         this.cartButton = this.page.getByRole("link", { name: "Cart" });
         this.loginButton = this.page.getByRole("link", { name: "Login" });
-        this.loggedInUser = this.page.getByRole("link", { name: "Logged in as " });
+        this.loggedInUser = this.page.locator("#header").getByText("Logged in as")
         this.loggedInUsername = this.loggedInUser.locator('b');
         this.logoutButton = this.page.getByRole("link", { name: "Logout" });
         this.deleteAccountButton = this.page.getByRole("link", { name: "Delete Account" });
@@ -41,7 +41,7 @@ export class Header {
     }
 
     async isUserLoggedIn():Promise<boolean> {
-        return this.loggedInUser.isVisible();
+        return await this.loggedInUser.isVisible();
     }
 
     async isLoggedInAs(username: string): Promise<boolean> {

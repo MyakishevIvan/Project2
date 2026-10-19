@@ -1,4 +1,11 @@
-import {CartPage, CheckoutPage, HomePage, LoginPage, ProductsPage} from "../pages";
+import {
+    CartPage,
+    CheckoutPage,
+    HomePage,
+    LoginPage,
+    ProductsPage,
+    RegistrationPage
+} from "../pages";
 import {test as base} from "@playwright/test"
 
 
@@ -8,6 +15,7 @@ type UiFixtures = {
     productsPage: ProductsPage;
     cartPage : CartPage;
     checkoutPage : CheckoutPage;
+    registrationPage : RegistrationPage;
 }
 
 export const uiFixtures = base.extend<UiFixtures>(
@@ -31,6 +39,10 @@ export const uiFixtures = base.extend<UiFixtures>(
         productsPage: async ({page}, use) => {
             const productsPage = new ProductsPage(page);
             await use(productsPage);
+        },
+        registrationPage: async ({page}, use) => {
+            const registrationPage = new RegistrationPage(page);
+            await use(registrationPage);
         }
     }
 )

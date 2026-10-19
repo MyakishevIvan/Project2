@@ -3,8 +3,8 @@ import {Header} from "../components/Header";
 import {Page} from "@playwright/test";
 
 export class HomePage {
-    private readonly footer: Footer
-    private readonly header: Header
+    readonly footer: Footer
+    readonly header: Header
     private readonly page: Page
 
     constructor(page: Page) {
@@ -14,7 +14,7 @@ export class HomePage {
     }
 
     async open(): Promise<void> {
-        await this.header.openHome()
+            await this.page.goto('/');
     }
 
     async subscribe(email: string): Promise<void> {

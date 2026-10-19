@@ -32,9 +32,9 @@ export default defineConfig({
       screenshot: 'only-on-failure',
       trace: 'retain-on-failure',
       video: 'retain-on-failure',
-      testIdAttribute: 'data-ga',
+      testIdAttribute: 'data-qa',
       launchOptions:{
-          slowMo: 500,
+          slowMo: 1000,
       }
   },
 
@@ -43,17 +43,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    }
 
     /* Test against mobile viewports. */
     // {

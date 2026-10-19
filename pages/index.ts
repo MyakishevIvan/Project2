@@ -4,3 +4,4 @@ export {ProductDetailsPage} from './ProductDetailsPage';
 export {LoginPage} from './LoginPage';
 export {ProductsPage} from './ProductsPage';
 export {CheckoutPage} from './CheckoutPage';
+export {RegistrationPage} from './RegistrationPage';
