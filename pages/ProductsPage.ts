@@ -1,20 +1,48 @@
 import {ProductCard} from "../components/ProductCard";
 import {Locator, Page} from "@playwright/test";
+import routes from "../test-data/routes.json"
+import {BasePage} from "./BasePage";
+import {toTitleCase} from "../utils/utils";
 
-export class ProductsPage {
-    private readonly page: Page;
+
+export class ProductsPage extends BasePage {
     private readonly searchInput: Locator
     private readonly productElements: Locator
-
+    private readonly searchButton: Locator
+    private readonly categories: Locator
+    private readonly categoryPanel: Locator
+    private readonly successPanel: Locator
 
     constructor(page: Page) {
+        super(page);
         this.page = page;
         this.searchInput = this.page.getByRole("textbox", {name: "Search Product"});
-        this.productElements = this.page.locator(".col-sm-4")
+        this.productElements = this.page.locator(".product-image-wrapper")
+        this.searchButton = this.page.locator("#submit_search");
+        this.categories = this.page.locator(".panel-title")
+        this.categoryPanel = this.page.locator("#accordian")
+        this.successPanel = this.page.locator(".modal-content")
+    }
+
+    async open(): Promise<void> {
+        await this.page.goto(routes.PRODUCTS)
+    }
+
+    async getAllCategories(): Promise<string[]> {
+        const elements = await this.categories.all();
+        const result = await Promise.all(elements.map(el => el.innerText()))
+        return result.map(toTitleCase)
+    }
+
+    async getAllSubcategory(category: string): Promise<string[]> {
+        const elements = await this.page.locator(`#${category} li a`).all();
+        const result = await Promise.all(elements.map(el => el.innerText()));
+        return result.map(toTitleCase)
     }
 
     async search(productName: string): Promise<void> {
         await this.searchInput.fill(productName);
+        await this.searchButton.click();
     }
 
     async getProducts(): Promise<ProductCard[]> {
@@ -55,19 +83,28 @@ export class ProductsPage {
     async addProductToCart(name: string): Promise<void> {
         const product = await this.getProductByName(name);
         await product.addToCart()
-
     }
 
-    async openCategory(category: string, subCategory: string): Promise<void> {
-        await this.page.getByText(category).click()
-        await this.page.getByText(subCategory).click()
+    async openCategory(category: string): Promise<void> {
+        await this.categoryPanel.getByText(category).click()
+    }
+
+    async openSubcategory(category: string, subcategory: string): Promise<void> {
+        await this.page.locator(`#${category} li`)
+            .getByText(subcategory, {exact: true})
+            .click();
     }
 
     async openBrand(brand: string): Promise<void> {
         await this.page.getByText(brand).click()
     }
 
+    async hasSucceededCartPanel(): Promise<boolean> {
+        return await this.successPanel.isVisible()
+    }
+
     async hasSearchResults(): Promise<boolean> {
         return (await this.getProductsCount()) > 0;
     }
+
 }

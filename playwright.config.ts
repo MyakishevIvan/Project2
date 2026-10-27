@@ -32,7 +32,7 @@ export default defineConfig({
       screenshot: 'only-on-failure',
       trace: 'retain-on-failure',
       video: 'retain-on-failure',
-      testIdAttribute: 'data-qa',
+      testIdAttribute: 'factories-qa',
       launchOptions:{
           slowMo: 1000,
       }

@@ -2,7 +2,7 @@ import {
     CartPage,
     CheckoutPage,
     HomePage,
-    LoginPage,
+    LoginPage, ProductDetailsPage,
     ProductsPage,
     RegistrationPage
 } from "../pages";
@@ -10,12 +10,13 @@ import {test as base} from "@playwright/test"
 
 
 type UiFixtures = {
-    homePage : HomePage;
+    homePage: HomePage;
     loginPage: LoginPage;
     productsPage: ProductsPage;
-    cartPage : CartPage;
-    checkoutPage : CheckoutPage;
-    registrationPage : RegistrationPage;
+    cartPage: CartPage;
+    checkoutPage: CheckoutPage;
+    registrationPage: RegistrationPage;
+    productDetailsPage: ProductDetailsPage;
 }
 
 export const uiFixtures = base.extend<UiFixtures>(
@@ -43,6 +44,10 @@ export const uiFixtures = base.extend<UiFixtures>(
         registrationPage: async ({page}, use) => {
             const registrationPage = new RegistrationPage(page);
             await use(registrationPage);
+        },
+        productDetailsPage: async ({page}, use) => {
+            const productDetailsPage = new ProductDetailsPage(page);
+            await use(productDetailsPage);
         }
     }
 )

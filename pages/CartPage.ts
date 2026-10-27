@@ -1,15 +1,21 @@
 import {Locator, Page} from "@playwright/test";
 import {Footer} from "../components/Footer";
+import {BasePage} from "./BasePage";
+import routes from "../test-data/routes.json"
 
-export class CartPage {
+export class CartPage extends BasePage{
     private readonly footer: Footer;
     private readonly cartElements;
-    private page: Page;
 
     constructor(page: Page) {
-        this.page = page;
-        this.footer = new Footer(page);
-        this.cartElements = page.locator("#cart_info_table tbody tr")
+        super(page);
+        this.footer = new Footer(this.page);
+        this.cartElements = this.page.locator("#cart_info_table tbody tr")
+    }
+
+
+    async open(): Promise<void> {
+        await this.page.goto(routes.CART);
     }
 
     async getItems(): Promise<Locator[]> {
@@ -84,7 +90,8 @@ export class CartPage {
     }
 
     async isEmpty(): Promise<boolean> {
-        return (await this.getItems()).length !==0
+        const items = await this.getItems();
+        return items.length ===0
     }
 
     async subscribe(email: string): Promise<void> {

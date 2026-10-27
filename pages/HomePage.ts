@@ -1,20 +1,21 @@
 import {Footer} from "../components/Footer";
 import {Header} from "../components/Header";
 import {Page} from "@playwright/test";
+import {BasePage} from "./BasePage";
+import routes from "../test-data/routes.json"
 
-export class HomePage {
+export class HomePage extends BasePage {
     readonly footer: Footer
     readonly header: Header
-    private readonly page: Page
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.footer = new Footer(page);
         this.header = new Header(page);
     }
 
     async open(): Promise<void> {
-            await this.page.goto('/');
+        await this.page.goto(routes.HOME);
     }
 
     async subscribe(email: string): Promise<void> {

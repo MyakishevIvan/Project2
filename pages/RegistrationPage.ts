@@ -1,9 +1,11 @@
 import {Locator, Page} from "@playwright/test";
 import {User} from "../types";
+import {BasePage} from "./BasePage";
+import routes from "../test-data/routes.json"
 
-export class RegistrationPage {
+
+export class RegistrationPage extends BasePage{
     //account info
-    private readonly page: Page;
     private readonly mrButton: Locator
     private readonly mrsButton: Locator
     private readonly nameInput: Locator
@@ -29,6 +31,7 @@ export class RegistrationPage {
 
 
     constructor(page: Page) {
+        super(page)
         this.page = page;
         this.mrButton = page.getByRole("radio", {name: "Mr"});
         this.mrsButton = page.getByRole("radio", {name: "Mrs"});
@@ -51,6 +54,10 @@ export class RegistrationPage {
         this.registerButton = page.getByTestId("create-account");
         this.successMessage = page.getByTestId("account-created");
         this.continueButton = page.getByTestId("continue-button");
+    }
+
+    async open(): Promise<void> {
+        await this.page.goto(routes.SIGNUP)
     }
 
     async registration(user: User) {

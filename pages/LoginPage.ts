@@ -1,6 +1,9 @@
 import {Locator, Page} from "@playwright/test";
+import {BasePage} from "./BasePage";
+import routes from "../test-data/routes.json"
 
-export class LoginPage {
+
+export class LoginPage extends BasePage {
     private readonly emailInputLogin: Locator
     private readonly passwordInputLogin: Locator
     private readonly emailInputRegister: Locator
@@ -9,10 +12,9 @@ export class LoginPage {
     private readonly signupButton: Locator
     private readonly loginForm: Locator
     private readonly signupForm: Locator
-    private readonly page: Page
 
     constructor(page: Page) {
-        this.page = page
+        super(page);
         this.emailInputLogin = this.page.getByTestId("login-email");
         this.passwordInputLogin = this.page.getByTestId("login-password");
         this.emailInputRegister = this.page.getByTestId("signup-email");
@@ -21,6 +23,10 @@ export class LoginPage {
         this.signupForm = this.page.locator(".signup-form");
         this.loginButton = this.page.getByTestId("login-button");
         this.signupButton = this.page.getByTestId("signup-button");
+    }
+
+    async open(): Promise<void> {
+        await this.page.goto(routes.LOGIN)
     }
 
     async login(email: string, password: string): Promise<void> {
@@ -46,4 +52,5 @@ export class LoginPage {
     async isSignupFormVisible(): Promise<boolean> {
         return await this.signupForm.isVisible()
     }
+
 }

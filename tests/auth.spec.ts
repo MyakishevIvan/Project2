@@ -13,8 +13,7 @@ test("successfully authenticate", async ({loginPage, homePage, userFactory, page
 
 test("failed authenticate", async ({loginPage, homePage, userFactory}) => {
     const user = userFactory.createInvalidUser();
-    await homePage.open();
-    await homePage.openLogin();
+    await loginPage.open();
     await loginPage.login(user.email, user.password);
     const isLogged = await homePage.header.isUserLoggedIn();
     expect(isLogged).toBeFalsy();
@@ -24,8 +23,7 @@ test("failed authenticate", async ({loginPage, homePage, userFactory}) => {
 
 test("successful register", async ({homePage, loginPage, userFactory, registrationPage}) => {
     const user = userFactory.create();
-    await homePage.open();
-    await homePage.openLogin();
+    await loginPage.open();
     await loginPage.register(user.name, user.email);
     await registrationPage.registration(user)
     expect(registrationPage.isRegistered()).toBeTruthy()
@@ -33,8 +31,7 @@ test("successful register", async ({homePage, loginPage, userFactory, registrati
 
 test("successful logout account", async ({homePage, loginPage, userFactory}) => {
     const userCredentials = userFactory.getUserCredentials();
-    await homePage.open();
-    await homePage.openLogin();
+    await loginPage.open();
     await loginPage.login(userCredentials.email, userCredentials.password);
     await homePage.header.logout()
     const isUserLogged = await homePage.header.isUserLoggedIn();

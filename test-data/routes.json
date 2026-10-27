@@ -1,0 +1,17 @@
+{
+  "HOME": "/",
+  "PRODUCTS": "/products",
+  "PRODUCT_DETAILS": "/product_details/{productId}",
+  "CART": "/view_cart",
+  "LOGIN": "/login",
+  "SIGNUP": "/signup",
+  "TEST_CASES": "/test_cases",
+  "API_TESTING": "/api_list",
+  "CONTACT_US": "/contact_us",
+  "CATEGORY_PRODUCTS": "/category_products/{categoryId}",
+  "BRAND_PRODUCTS": "/brand_products/{brandName}",
+  "CHECKOUT": "/checkout",
+  "PAYMENT": "/payment",
+  "DELETE_ACCOUNT": "/delete_account",
+  "DOWNLOAD_INVOICE": "/download_invoice/{orderId}"
+}

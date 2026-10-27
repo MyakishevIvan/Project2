@@ -1,7 +1,8 @@
 import {AccountApi, ApiClient, BrandsApi, ProductsApi} from "../api";
 import {expect, test as base} from "@playwright/test"
 import {User} from "../types";
-import {UserFactory} from "../data/UserFactory";
+import {UserFactory} from "../factories/UserFactory";
+import {ProductFactory} from "../factories/ProductFactory";
 
 
 type ApiFixtures = {
@@ -10,6 +11,7 @@ type ApiFixtures = {
     brandsApi: BrandsApi;
     accountApi: AccountApi;
     userFactory: UserFactory;
+    productFactory: ProductFactory;
     registeredUser: User;
     failedUser: User;
 }
@@ -30,6 +32,9 @@ export const apiFixtures = base.extend<ApiFixtures>(
         },
         userFactory: async ({}, use) => {
             await use(new UserFactory());
+        },
+        productFactory: async ({}, use) => {
+            await use(new ProductFactory());
         },
         failedUser: async ({userFactory}, use) => {
             const user = userFactory.createInvalidUser();

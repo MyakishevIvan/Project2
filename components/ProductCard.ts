@@ -10,23 +10,18 @@ export class ProductCard {
     }
 
     async getName(): Promise<string> {
-        const result = await this.textContainer.locator("p").textContent();
-        if (!result) {
-            throw new Error(`Could not find name`)
-        }
-        return result
+        const result = await this.textContainer.locator("p").innerText();
+        return result.trim()
     }
 
     async getPrice(): Promise<string> {
-        const result =  await this.textContainer.locator("h2").textContent()
-        if (!result) {
-            throw new Error(`Could not find price`)
-        }
+        const result =  await this.textContainer.locator("h2").innerText()
         return result
     }
 
     async addToCart(): Promise<void> {
-        await this.productCart.getByRole("link", {name: "Add to cart"}).click()
+        await this.textContainer.locator("h2").hover()
+        await this.productCart.locator('.product-overlay .add-to-cart').click();
     }
 
     async openDetails(): Promise<void> {

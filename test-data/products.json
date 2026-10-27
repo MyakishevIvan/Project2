@@ -15,13 +15,6 @@
       "brand": "H&M"
     },
     {
-      "id": 3,
-      "name": "Sleeveless Dress",
-      "price": "Rs. 1000",
-      "category": "Dress",
-      "brand": "Madame"
-    },
-    {
       "id": 4,
       "name": "Stylish Dress",
       "price": "Rs. 1500",
@@ -41,13 +34,6 @@
       "price": "Rs. 400",
       "category": "Tops",
       "brand": "H&M"
-    },
-    {
-      "id": 7,
-      "name": "Madame Top For Women",
-      "price": "Rs. 1000",
-      "category": "Tops",
-      "brand": "Madame"
     },
     {
       "id": 8,

@@ -1,8 +1,10 @@
 import {Download, Locator, Page} from "@playwright/test";
 import {CardDetails} from "../components/CardDetails";
+import {BasePage} from "./BasePage";
+import routes from "../test-data/routes.json"
 
-export class CheckoutPage {
-    private readonly page: Page;
+
+export class CheckoutPage extends BasePage{
     private readonly items: Locator;
     private readonly address: Locator;
     private readonly billingAddress: Locator;
@@ -15,17 +17,21 @@ export class CheckoutPage {
     private readonly cardDetails: CardDetails;
 
     constructor(page: Page) {
-        this.page = page;
-        this.items = page.locator("#cart_info tbody tr")
-        this.address = page.locator("#address_delivery .address_address1")
-        this.billingAddress = page.locator("#address_invoice .address_address1")
-        this.totalPrices = page.locator(".cart_total_price")
+        super(page);
+        this.items = this.page.locator("#cart_info tbody tr")
+        this.address = this.page.locator("#address_delivery .address_address1")
+        this.billingAddress = this.page.locator("#address_invoice .address_address1")
+        this.totalPrices = this.page.locator(".cart_total_price")
         this.textForm = this.page.locator(".form-control")
         this.placeButton = this.page.getByRole("button", {name: "Place Order"})
         this.payButton = this.page.getByTestId("pay-button")
         this.invoiceButton = this.page.getByRole("link", {name: "Download Invoice"})
         this.successMessage = this.page.locator("#success_message")
         this.cardDetails = new CardDetails(page)
+    }
+
+    async open(): Promise<void> {
+        await this.page.goto(routes.CHECKOUT);
     }
 
     async isAddressVisible(): Promise<boolean> {
