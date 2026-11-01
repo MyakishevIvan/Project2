@@ -2,12 +2,15 @@ import {
     CartPage,
     CheckoutPage,
     HomePage,
-    LoginPage, ProductDetailsPage,
+    LoginPage,
+    ProductDetailsPage,
     ProductsPage,
     RegistrationPage
 } from "../pages";
-import {test as base} from "@playwright/test"
 
+import { test as base } from "@playwright/test";
+import { UserFactory } from "../factories/UserFactory";
+import { ProductFactory } from "../factories/ProductFactory";
 
 type UiFixtures = {
     homePage: HomePage;
@@ -17,37 +20,44 @@ type UiFixtures = {
     checkoutPage: CheckoutPage;
     registrationPage: RegistrationPage;
     productDetailsPage: ProductDetailsPage;
+    userFactory: UserFactory;
+    productFactory: ProductFactory;
 }
 
-export const uiFixtures = base.extend<UiFixtures>(
-    {
-        loginPage: async ({page}, use) => {
-            const loginPage = new LoginPage(page);
-            await use(loginPage);
-        },
-        homePage: async ({page}, use) => {
-            const homePage = new HomePage(page);
-            await use(homePage);
-        },
-        checkoutPage: async ({page}, use) => {
-            const checkoutPage = new CheckoutPage(page);
-            await use(checkoutPage);
-        },
-        cartPage: async ({page}, use) => {
-            const cartPage = new CartPage(page);
-            await use(cartPage);
-        },
-        productsPage: async ({page}, use) => {
-            const productsPage = new ProductsPage(page);
-            await use(productsPage);
-        },
-        registrationPage: async ({page}, use) => {
-            const registrationPage = new RegistrationPage(page);
-            await use(registrationPage);
-        },
-        productDetailsPage: async ({page}, use) => {
-            const productDetailsPage = new ProductDetailsPage(page);
-            await use(productDetailsPage);
-        }
+export const uiFixtures = base.extend<UiFixtures>({
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
+    },
+
+    homePage: async ({ page }, use) => {
+        await use(new HomePage(page));
+    },
+
+    checkoutPage: async ({ page }, use) => {
+        await use(new CheckoutPage(page));
+    },
+
+    cartPage: async ({ page }, use) => {
+        await use(new CartPage(page));
+    },
+
+    productsPage: async ({ page }, use) => {
+        await use(new ProductsPage(page));
+    },
+
+    registrationPage: async ({ page }, use) => {
+        await use(new RegistrationPage(page));
+    },
+
+    productDetailsPage: async ({ page }, use) => {
+        await use(new ProductDetailsPage(page));
+    },
+
+    userFactory: async ({}, use) => {
+        await use(new UserFactory());
+    },
+
+    productFactory: async ({}, use) => {
+        await use(new ProductFactory());
     }
-)
+});

@@ -9,5 +9,12 @@
     "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "types/**/*.ts",
+    "utils/**/*.ts",
+    "fixtures/**/*.ts",
+    "playwright.config.ts"
+  ]
 }

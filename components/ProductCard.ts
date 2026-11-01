@@ -1,4 +1,5 @@
 import {Locator} from "@playwright/test";
+import {ProductInfo} from "../types/ProductInfo";
 
 export class ProductCard {
     private readonly productCart: Locator
@@ -9,14 +10,21 @@ export class ProductCard {
         this.textContainer = this.productCart.locator(".productinfo.text-center")
     }
 
+    async getProductInfo(): Promise<ProductInfo> {
+        return {
+            name: await this.getName(),
+            price: await this.getPrice()
+        }
+    }
+
     async getName(): Promise<string> {
         const result = await this.textContainer.locator("p").innerText();
         return result.trim()
     }
 
     async getPrice(): Promise<string> {
-        const result =  await this.textContainer.locator("h2").innerText()
-        return result
+        const result = await this.textContainer.locator("h2").innerText()
+        return result.split(".")[1].trim()
     }
 
     async addToCart(): Promise<void> {

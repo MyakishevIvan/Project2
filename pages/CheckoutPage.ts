@@ -15,6 +15,7 @@ export class CheckoutPage extends BasePage{
     private readonly invoiceButton: Locator;
     private readonly successMessage: Locator;
     private readonly cardDetails: CardDetails;
+    private readonly country: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -27,26 +28,12 @@ export class CheckoutPage extends BasePage{
         this.payButton = this.page.getByTestId("pay-button")
         this.invoiceButton = this.page.getByRole("link", {name: "Download Invoice"})
         this.successMessage = this.page.locator("#success_message")
+        this.country = this.page.locator("#address_delivery .address_country_name")
         this.cardDetails = new CardDetails(page)
     }
 
     async open(): Promise<void> {
         await this.page.goto(routes.CHECKOUT);
-    }
-
-    async isAddressVisible(): Promise<boolean> {
-        const locators = await this.address.all();
-        if (locators.length === 0) {
-            return false;
-        }
-
-        for (const locator of locators) {
-            const text = await locator.innerText();
-            if (!text.trim()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     async getDeliveryAddress(): Promise<string> {
@@ -69,16 +56,25 @@ export class CheckoutPage extends BasePage{
             result.push(text.trim());
         }
         return result.join("\r\n");
-
     }
 
-    async getOrderItems(): Promise<Locator[]> {
-        return await this.items.all();
+    async getCountry(): Promise<string> {
+        return await this.country.innerText()
     }
 
-    async getOrderTotal(): Promise<number> {
+    async getOrderByName(name: string): Promise<Locator> {
+        for (const item of await this.items.all()) {
+            const orderName = await item.locator(".cart_description a").textContent();
+            if (orderName?.trim() === name) {
+                return item;
+            }
+        }
+        throw new Error("Could not find item with name " + name)
+    }
+
+    async getOrderTotalPrice(): Promise<number> {
         const price = await this.totalPrices.last().innerText()
-        return Number(price.trim())
+        return Number(price.split(".")[1].trim())
     }
 
     async enterComment(comment: string): Promise<void> {

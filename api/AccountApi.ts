@@ -1,14 +1,14 @@
 import {ApiClient} from "./ApiClient";
 import {APIResponse} from "@playwright/test";
 import {EndpointName} from "../enums/EndpointName";
-import {UserLogin} from "../types/UserLogin";
+import {VerifiedUser} from "../types/VerifiedUser";
 import {User} from "../types";
 
 export class AccountApi{
     constructor(private readonly apiClient: ApiClient) {
     }
 
-    async login(data: UserLogin): Promise<APIResponse> {
+    async login(data: VerifiedUser): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.VERIFY_LOGIN, data)
     }
 
@@ -16,7 +16,7 @@ export class AccountApi{
         return await this.apiClient.send(EndpointName.CREATE_ACCOUNT, data)
     }
 
-    async deleteAccount(data: UserLogin): Promise<APIResponse> {
+    async deleteAccount(data: VerifiedUser): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.DELETE_ACCOUNT, data)
     }
 

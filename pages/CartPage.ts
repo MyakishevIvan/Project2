@@ -3,7 +3,7 @@ import {Footer} from "../components/Footer";
 import {BasePage} from "./BasePage";
 import routes from "../test-data/routes.json"
 
-export class CartPage extends BasePage{
+export class CartPage extends BasePage {
     private readonly footer: Footer;
     private readonly cartElements;
 
@@ -34,7 +34,7 @@ export class CartPage extends BasePage{
         return itemNames;
     }
 
-    private async getItemByName(name: string): Promise<Locator> {
+    async getItemByName(name: string): Promise<Locator> {
         for (const item of await this.getItems()) {
             const itemName = await item.locator(".cart_description a").textContent();
             if (itemName?.trim() === name) {
@@ -85,13 +85,12 @@ export class CartPage extends BasePage{
         await item.locator(".cart_quantity_delete").click()
     }
 
-    async proceedToCheckout(): Promise<void> {
-        await this.page.getByRole("link", { name: "Proceed To Checkout" }).click();
-    }
+    async clickCheckout(): Promise<void> {
+        await this.page.locator('a.check_out').click();    }
 
     async isEmpty(): Promise<boolean> {
         const items = await this.getItems();
-        return items.length ===0
+        return items.length === 0
     }
 
     async subscribe(email: string): Promise<void> {

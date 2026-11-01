@@ -1,8 +1,7 @@
-import {test} from "../fixtures/test";
-import {expect} from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 test("successfully authenticate", async ({loginPage, homePage, userFactory, page}) => {
-    const userCredentials = userFactory.getUserCredentials();
+    const userCredentials = userFactory.getVerifiedUser();
     await homePage.open();
     await homePage.openLogin();
     await loginPage.login(userCredentials.email, userCredentials.password);
@@ -21,8 +20,8 @@ test("failed authenticate", async ({loginPage, homePage, userFactory}) => {
     expect(errorMessage).toEqual("Your email or password is incorrect!")
 });
 
-test("successful register", async ({homePage, loginPage, userFactory, registrationPage}) => {
-    const user = userFactory.create();
+test("successful register", async ({loginPage, userFactory, registrationPage}) => {
+    const user = userFactory.createValidUser();
     await loginPage.open();
     await loginPage.register(user.name, user.email);
     await registrationPage.registration(user)
@@ -30,7 +29,7 @@ test("successful register", async ({homePage, loginPage, userFactory, registrati
 })
 
 test("successful logout account", async ({homePage, loginPage, userFactory}) => {
-    const userCredentials = userFactory.getUserCredentials();
+    const userCredentials = userFactory.getVerifiedUser();
     await loginPage.open();
     await loginPage.login(userCredentials.email, userCredentials.password);
     await homePage.header.logout()

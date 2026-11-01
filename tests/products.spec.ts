@@ -1,5 +1,4 @@
-import {test} from "../fixtures/test";
-import {expect} from "@playwright/test";
+import { test, expect } from "../fixtures";
 
 
 test("products list not empty", async ({homePage, productsPage}) => {

@@ -1,3 +1,3 @@
-export {ApiResponse} from './apiResponse';
-export {Product} from './product';
-export {User} from './user';
+export { ApiResponse } from './ApiResponse';
+export { Product } from './Product';
+export { User } from './User';

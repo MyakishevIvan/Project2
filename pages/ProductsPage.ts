@@ -12,6 +12,7 @@ export class ProductsPage extends BasePage {
     private readonly categories: Locator
     private readonly categoryPanel: Locator
     private readonly successPanel: Locator
+    private readonly continueButton: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -22,6 +23,7 @@ export class ProductsPage extends BasePage {
         this.categories = this.page.locator(".panel-title")
         this.categoryPanel = this.page.locator("#accordian")
         this.successPanel = this.page.locator(".modal-content")
+        this.continueButton = this.page.getByRole("button", {name: "Continue Shopping"})
     }
 
     async open(): Promise<void> {
@@ -32,6 +34,10 @@ export class ProductsPage extends BasePage {
         const elements = await this.categories.all();
         const result = await Promise.all(elements.map(el => el.innerText()))
         return result.map(toTitleCase)
+    }
+
+    async continueShoppingClick(): Promise<void> {
+        await this.continueButton.click()
     }
 
     async getAllSubcategory(category: string): Promise<string[]> {
