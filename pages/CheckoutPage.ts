@@ -2,9 +2,10 @@ import {Download, Locator, Page} from "@playwright/test";
 import {CardDetails} from "../components/CardDetails";
 import {BasePage} from "./BasePage";
 import routes from "../test-data/routes.json"
+import {PaymentCard} from "../types";
 
 
-export class CheckoutPage extends BasePage{
+export class CheckoutPage extends BasePage {
     private readonly items: Locator;
     private readonly address: Locator;
     private readonly billingAddress: Locator;
@@ -24,10 +25,10 @@ export class CheckoutPage extends BasePage{
         this.billingAddress = this.page.locator("#address_invoice .address_address1")
         this.totalPrices = this.page.locator(".cart_total_price")
         this.textForm = this.page.locator(".form-control")
-        this.placeButton = this.page.getByRole("button", {name: "Place Order"})
+        this.placeButton = this.page.locator("a.check_out")
         this.payButton = this.page.getByTestId("pay-button")
         this.invoiceButton = this.page.getByRole("link", {name: "Download Invoice"})
-        this.successMessage = this.page.locator("#success_message")
+        this.successMessage = this.page.getByTestId("order-placed")
         this.country = this.page.locator("#address_delivery .address_country_name")
         this.cardDetails = new CardDetails(page)
     }
@@ -85,18 +86,13 @@ export class CheckoutPage extends BasePage{
         await this.placeButton.click();
     }
 
-    async fillPaymentDetails(
-        name: string,
-        cardNumber: string,
-        cvc: string,
-        month: string,
-        year: string): Promise<void> {
-
-        await this.cardDetails.fillPaymentDetails(name,
-            cardNumber,
-            cvc,
-            month,
-            year
+    async fillPaymentDetails(card: PaymentCard): Promise<void> {
+        await this.cardDetails.fillPaymentDetails(
+            card.cardName,
+            card.cardNumber,
+            card.cvv,
+            card.expirationMonth,
+            card.expirationYear
         );
     }
 
@@ -104,9 +100,8 @@ export class CheckoutPage extends BasePage{
         await this.payButton.click();
     }
 
-    async getOrderSuccessMessage(): Promise<string> {
-        await this.successMessage.waitFor({state: "visible"});
-        return await this.successMessage.innerText();
+    async isPurchaseSuccessful(): Promise<boolean> {
+        return await this.successMessage.isVisible();
     }
 
     async downloadInvoice(): Promise<Download> {

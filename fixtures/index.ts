@@ -1,2 +1,2 @@
-export { test } from "./ScenarioFixture";
-export { expect } from "@playwright/test";
+export { scenarioFixtures as test } from './ScenarioFixture';
+export { expect } from '@playwright/test';

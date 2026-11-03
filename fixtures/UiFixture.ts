@@ -8,9 +8,9 @@ import {
     RegistrationPage
 } from "../pages";
 
-import { test as base } from "@playwright/test";
-import { UserFactory } from "../factories/UserFactory";
+import { UserDataFactory } from "../factories/UserDataFactory";
 import { ProductFactory } from "../factories/ProductFactory";
+import {apiFixtures} from "./ApiFixture";
 
 type UiFixtures = {
     homePage: HomePage;
@@ -20,11 +20,11 @@ type UiFixtures = {
     checkoutPage: CheckoutPage;
     registrationPage: RegistrationPage;
     productDetailsPage: ProductDetailsPage;
-    userFactory: UserFactory;
+    userFactory: UserDataFactory;
     productFactory: ProductFactory;
 }
 
-export const uiFixtures = base.extend<UiFixtures>({
+export const uiFixtures = apiFixtures.extend<UiFixtures>({
     loginPage: async ({ page }, use) => {
         await use(new LoginPage(page));
     },
@@ -51,13 +51,5 @@ export const uiFixtures = base.extend<UiFixtures>({
 
     productDetailsPage: async ({ page }, use) => {
         await use(new ProductDetailsPage(page));
-    },
-
-    userFactory: async ({}, use) => {
-        await use(new UserFactory());
-    },
-
-    productFactory: async ({}, use) => {
-        await use(new ProductFactory());
     }
 });

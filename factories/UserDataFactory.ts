@@ -1,14 +1,16 @@
-import {User} from "../types";
+import {PaymentCard, User} from "../types";
 import usersData from "../test-data/users.json";
+import card from "../test-data/card.json"
 import {randomInt} from "node:crypto";
 import dotenv from 'dotenv';
 import {VerifiedUser} from "../types/VerifiedUser";
 
 dotenv.config();
 
-export class UserFactory {
+export class UserDataFactory {
     private validUsers: User[] = usersData.validUsers;
     private invalidUsers: User[] = usersData.invalidUsers;
+    private paymentCard: PaymentCard = card
     private availableIndexes: number[] = this.validUsers.map((_, index) => index);
 
     createValidUser(): User {
@@ -18,7 +20,6 @@ export class UserFactory {
 
         const randomIndex = randomInt(0, this.availableIndexes.length);
         const userIndex = this.availableIndexes.splice(randomIndex, 1)[0];
-
         return this.validUsers[userIndex];
     }
 
@@ -26,13 +27,14 @@ export class UserFactory {
         return this.invalidUsers[0]
     }
 
-    getVerifiedUser(): VerifiedUser {
+    createVerifiedUser(): VerifiedUser {
         const email = process.env.LOGIN;
         const password = process.env.PASSWORD;
         const county = process.env.COUNTY;
         const street = process.env.STREET;
+        const name = process.env.NAME;
 
-        if (!email || !password ! || !county || !street) {
+        if (!email || !password ! || !county || !street || !name) {
             throw new Error('User credentials are not defined in .env');
         }
         return {
@@ -40,6 +42,11 @@ export class UserFactory {
             password,
             county,
             street,
+            name
         };
+    }
+
+    createPaymentCard(): PaymentCard {
+        return this.paymentCard
     }
 }

@@ -35,8 +35,10 @@ export default defineConfig({
       testIdAttribute: 'data-qa',
       launchOptions:{
           slowMo: 1000,
-      }
+      },
+      // actionTimeout: 10000,
   },
+      timeout: 60000,
 
   /* Configure projects for major browsers */
   projects: [

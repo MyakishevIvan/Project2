@@ -1,26 +1,21 @@
-import {mergeTests} from "@playwright/test";
-
-import {apiFixtures} from "./ApiFixture";
-import {uiFixtures} from "./UiFixture";
 import {ProductInfo} from "../types/ProductInfo";
 import {VerifiedUser} from "../types/VerifiedUser";
+import {uiFixtures} from "./UiFixture";
 
-const base = mergeTests(apiFixtures, uiFixtures);
 
 type ScenarioFixtures = {
     login: VerifiedUser;
     addProduct: ProductInfo[]
 };
 
-export const test = base.extend<ScenarioFixtures>({
-    login: async ({loginPage, userFactory}, use) => {
-        const userCredentials = userFactory.getVerifiedUser();
+export const scenarioFixtures = uiFixtures.extend<ScenarioFixtures>({
+    login: async ({loginPage, testData}, use) => {
         await loginPage.open();
         await loginPage.login(
-            userCredentials.email,
-            userCredentials.password
+            testData.verifiedUser.email,
+            testData.verifiedUser.password
         );
-        await use(userCredentials);
+        await use(testData.verifiedUser);
     },
     addProduct: async ({productsPage}, use) => {
         await productsPage.open()
@@ -35,12 +30,12 @@ export const test = base.extend<ScenarioFixtures>({
 
         await use(productsInfo);
     }
-
 });
 
-test.beforeEach(async ({context}) => {
+scenarioFixtures.beforeEach(async ({ context }) => {
     await context.route(
         /doubleclick\.net|googlesyndication\.com/,
         route => route.abort()
     );
+
 });

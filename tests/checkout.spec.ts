@@ -1,11 +1,11 @@
 import {test, expect} from "../fixtures";
+import fs from "node:fs/promises";
 
-//comment → payment → confirm → success.
-//     После заказа скачать invoice и проверить факт загрузки.
 
 test("successfully complete checkout process", async ({
                                                           cartPage,
                                                           checkoutPage,
+                                                          testData,
                                                           login,
                                                           addProduct
                                                       }) => {
@@ -23,4 +23,14 @@ test("successfully complete checkout process", async ({
     }
     const totalPrice = await checkoutPage.getOrderTotalPrice();
     expect(orderPrice).toBe(totalPrice);
+    await checkoutPage.placeOrder()
+    await checkoutPage.fillPaymentDetails(testData.paymentCard)
+    await checkoutPage.payAndConfirm()
+    const isSuccessful = await checkoutPage.isPurchaseSuccessful();
+    expect(isSuccessful).toBeTruthy()
+    const downloaded = await checkoutPage.downloadInvoice();
+    const filePath = await downloaded.path();
+    expect(filePath).not.toBeNull();
+    const content = await fs.readFile(filePath!, "utf-8");
+    expect(content).toContain(login.name);
 });

@@ -31,7 +31,7 @@ day_10/
 ├── fixtures/
 │   └── test.ts
 ├── data/
-│   ├── UserFactory.ts
+│   ├── UserDataFactory.ts
 │   └── ProductData.ts
 ├── types/
 │   ├── User.ts
@@ -103,7 +103,7 @@ Generic тип API response, позволяющий использовать р�
 
 ## 3. Test data
 
-### `data/UserFactory.ts`
+### `data/UserDataFactory.ts`
 
 Метод:
 
@@ -353,7 +353,7 @@ Page Objects и API-классы не должны создаваться вру
 1. Успешный login.
 2. Login с неправильными credentials.
 3. Переход на регистрацию.
-4. Регистрация нового пользователя через `UserFactory`, проверка создания аккаунта, username в header, удаление аккаунта и проверка удаления.
+4. Регистрация нового пользователя через `UserDataFactory`, проверка создания аккаунта, username в header, удаление аккаунта и проверка удаления.
 5. Logout.
 
 ## 18. Products tests
@@ -428,7 +428,7 @@ Page Objects и API-классы не должны создаваться вру
 - UI-взаимодействия находятся в Page Objects/Components.
 - Повторяющийся Header/Footer/ProductCard — отдельные Components.
 - Page Objects создаются через fixtures.
-- User создаётся через UserFactory.
+- User создаётся через UserDataFactory.
 - API-классы получают данные; assertions находятся в тестах.
 - Page Objects выполняют действия и возвращают данные/состояние; assertions находятся в тестах.
 - Не использовать `any`.
@@ -443,7 +443,7 @@ Page Objects и API-классы не должны создаваться вру
 - 3 Components;
 - 2 API classes;
 - 1 generic ApiClient;
-- 1 UserFactory;
+- 1 UserDataFactory;
 - 1 custom fixture;
 - 5 test files;
 - 25 UI/API сценариев суммарно;
