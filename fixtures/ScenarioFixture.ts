@@ -1,11 +1,11 @@
 import {ProductInfo} from "../types/ProductInfo";
-import {VerifiedUser} from "../types/VerifiedUser";
+import {UserData} from "../types/UserData";
 import {uiFixtures} from "./UiFixture";
 
 
 type ScenarioFixtures = {
-    login: VerifiedUser;
-    addProduct: ProductInfo[]
+    login: UserData;
+    addProduct: ProductInfo[];
 };
 
 export const scenarioFixtures = uiFixtures.extend<ScenarioFixtures>({

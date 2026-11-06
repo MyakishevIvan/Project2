@@ -1,13 +1,13 @@
-import {VerifiedUser} from "./VerifiedUser";
-import {User} from "./User";
+import {UserData} from "./UserData";
+import {RegistrationUser} from "./RegistrationUser";
 import {PaymentCard} from "./PaymentCard";
 import {Product} from "./Product";
 
 
 export interface TestData {
-    verifiedUser: VerifiedUser;
-    invalidUser: User;
-    validUser: User;
+    verifiedUser: UserData;
+    invalidUser: RegistrationUser;
+    validUser: RegistrationUser;
     paymentCard: PaymentCard;
     product: Product;
 }

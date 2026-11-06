@@ -5,9 +5,17 @@ import {TestData} from "../types";
 
 type DataFixture = {
     testData: TestData;
+    userFactory: UserDataFactory;
+    productFactory: ProductFactory;
 }
 
 export const dataFixtures = base.extend<DataFixture>({
+    userFactory: async ({}, use) => {
+        await use(new UserDataFactory());
+    },
+    productFactory: async ({}, use) => {
+        await use(new ProductFactory());
+    },
     testData: async ({}, use) => {
         const userDataFactory = new UserDataFactory();
         const productFactory = new ProductFactory();

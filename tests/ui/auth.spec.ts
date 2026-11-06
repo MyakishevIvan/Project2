@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures";
+import { test, expect } from "../../fixtures";
 
 test("successfully authenticate", async ({loginPage, homePage, testData, page}) => {
     await homePage.open();

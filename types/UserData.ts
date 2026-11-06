@@ -1,7 +1,7 @@
-export interface VerifiedUser {
+export interface UserData {
     name: string,
     email: string;
     password: string;
-    county: string;
+    country: string;
     street: string;
 }

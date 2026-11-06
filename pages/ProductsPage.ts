@@ -108,9 +108,4 @@ export class ProductsPage extends BasePage {
     async hasSucceededCartPanel(): Promise<boolean> {
         return await this.successPanel.isVisible()
     }
-
-    async hasSearchResults(): Promise<boolean> {
-        return (await this.getProductsCount()) > 0;
-    }
-
 }

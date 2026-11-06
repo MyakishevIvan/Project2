@@ -52,18 +52,6 @@ export class ProductDetailsPage extends BasePage {
         return brandRaw.split(":")[1].trim();
     }
 
-    async getAvailability(): Promise<string> {
-        const availabilityRaw = await this.itemCard
-            .getByText("Availability").innerText();
-        return availabilityRaw.split(":")[1].trim();
-    }
-
-    async getCondition(): Promise<string> {
-        const availabilityRaw = await this.itemCard
-            .getByText("Condition").innerText();
-        return availabilityRaw.split(":")[1].trim();
-    }
-
     async setQuantity(quantity: number): Promise<void> {
         await this.page.locator("#quantity").fill(quantity.toString());
     }

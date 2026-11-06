@@ -6,9 +6,4 @@ export abstract class BasePage {
     }
 
     abstract open(param?: string | number): Promise<void>;
-
-    async refresh(): Promise<void> {
-        await this.page.reload();
-    }
-
 }

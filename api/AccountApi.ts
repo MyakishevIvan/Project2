@@ -1,26 +1,26 @@
 import {ApiClient} from "./ApiClient";
 import {APIResponse} from "@playwright/test";
 import {EndpointName} from "../enums/EndpointName";
-import {VerifiedUser} from "../types/VerifiedUser";
-import {User} from "../types";
+import {UserData} from "../types/UserData";
+import {RegistrationUser} from "../types";
 
 export class AccountApi{
     constructor(private readonly apiClient: ApiClient) {
     }
 
-    async login(data: VerifiedUser): Promise<APIResponse> {
+    async login(data: UserData): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.VERIFY_LOGIN, data)
     }
 
-    async register(data: User): Promise<APIResponse> {
+    async register(data: RegistrationUser): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.CREATE_ACCOUNT, data)
     }
 
-    async deleteAccount(data: VerifiedUser): Promise<APIResponse> {
+    async deleteAccount(data: UserData): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.DELETE_ACCOUNT, data)
     }
 
-    async updateAccount(data: User): Promise<APIResponse> {
+    async updateAccount(data: RegistrationUser): Promise<APIResponse> {
         return await this.apiClient.send(EndpointName.UPDATE_ACCOUNT, data)
     }
 
