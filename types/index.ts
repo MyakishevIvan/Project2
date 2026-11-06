@@ -1,7 +1,8 @@
 export { ApiResponse } from './ApiResponse';
-export { Product } from './Product';
-export { User } from './User';
+export { ProductInfo } from './ProductInfo';
+export { RegistrationUser } from './RegistrationUser';
 export {Endpoint} from './Endpoint';
 export {PaymentCard} from './PaymentCard';
-export {ProductInfo} from './ProductInfo';
+export {BaseProduct} from './BaseProduct';
 export {TestData} from './TestData';
+export {UserData} from './UserData';

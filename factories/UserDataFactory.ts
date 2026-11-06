@@ -1,47 +1,50 @@
-import {PaymentCard, User} from "../types";
+import {PaymentCard, RegistrationUser} from "../types";
 import usersData from "../test-data/users.json";
 import card from "../test-data/card.json"
-import {randomInt} from "node:crypto";
+import {randomInt, randomUUID} from "node:crypto";
 import dotenv from 'dotenv';
-import {VerifiedUser} from "../types/VerifiedUser";
+import {UserData} from "../types/UserData";
 
 dotenv.config();
 
 export class UserDataFactory {
-    private validUsers: User[] = usersData.validUsers;
-    private invalidUsers: User[] = usersData.invalidUsers;
+    private validUsers: RegistrationUser[] = usersData.validUsers;
+    private invalidUsers: RegistrationUser[] = usersData.invalidUsers;
     private paymentCard: PaymentCard = card
     private availableIndexes: number[] = this.validUsers.map((_, index) => index);
 
-    createValidUser(): User {
+    createValidUser(): RegistrationUser {
         if (this.availableIndexes.length === 0) {
             throw new Error("All users were used");
         }
 
         const randomIndex = randomInt(0, this.availableIndexes.length);
         const userIndex = this.availableIndexes.splice(randomIndex, 1)[0];
-        return this.validUsers[userIndex];
+        return {
+            ...this.validUsers[userIndex],
+            email: `test_${randomUUID()}@example.com`
+        };
     }
 
-    createInvalidUser(): User {
+    createInvalidUser(): RegistrationUser {
         return this.invalidUsers[0]
     }
 
-    createVerifiedUser(): VerifiedUser {
+    createVerifiedUser(): UserData {
         const email = process.env.LOGIN;
         const password = process.env.PASSWORD;
-        const county = process.env.COUNTY;
-        const street = process.env.STREET;
+        const country = process.env.COUNTRY;
+        const address1 = process.env.STREET;
         const name = process.env.NAME;
 
-        if (!email || !password ! || !county || !street || !name) {
+        if (!email || !password ! || !country || !address1 || !name) {
             throw new Error('User credentials are not defined in .env');
         }
         return {
             email,
             password,
-            county,
-            street,
+            country,
+            address1,
             name
         };
     }

@@ -18,15 +18,15 @@ export class HomePage extends BasePage {
         await this.page.goto(routes.HOME);
     }
 
-    async subscribe(email: string): Promise<void> {
-        await this.footer.subscribe(email)
-    }
-
     async openProducts(): Promise<void> {
         await this.header.openProducts()
     }
 
     async openLogin(): Promise<void> {
         await this.header.openLogin()
+    }
+
+    async subscribe(email: string): Promise<void> {
+        await this.footer.subscribe(email)
     }
 }

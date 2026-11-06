@@ -11,7 +11,6 @@ export class ProductDetailsPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.page = page;
         this.itemCard = this.page.locator(".product-information");
         this.reviewForm = this.page.locator("#review-form");
         this.successPanel = this.page.locator(".modal-content")
@@ -25,17 +24,6 @@ export class ProductDetailsPage extends BasePage {
         }
 
         await this.page.goto(routes.PRODUCT_DETAILS + `${productId}`);
-    }
-
-    async getName(): Promise<string> {
-        const name = await this.itemCard.locator("h2").innerText();
-        return name;
-    }
-
-    async getPrice(): Promise<string> {
-        const priceRaw = await this.itemCard.getByText("Rs").innerText();
-        const price = priceRaw.slice(4);
-        return price;
     }
 
     async getCategories(): Promise<{ category: string, subcategory: string }> {
@@ -52,18 +40,6 @@ export class ProductDetailsPage extends BasePage {
         return brandRaw.split(":")[1].trim();
     }
 
-    async getAvailability(): Promise<string> {
-        const availabilityRaw = await this.itemCard
-            .getByText("Availability").innerText();
-        return availabilityRaw.split(":")[1].trim();
-    }
-
-    async getCondition(): Promise<string> {
-        const availabilityRaw = await this.itemCard
-            .getByText("Condition").innerText();
-        return availabilityRaw.split(":")[1].trim();
-    }
-
     async setQuantity(quantity: number): Promise<void> {
         await this.page.locator("#quantity").fill(quantity.toString());
     }
@@ -77,11 +53,6 @@ export class ProductDetailsPage extends BasePage {
         await this.reviewForm.getByRole("textbox", {name: "Email Address"}).fill(email)
         await this.reviewForm.getByRole("textbox", {name: "Add Review Here!"}).fill(review)
         await this.submitButton.click();
-    }
-
-    async getReviewSuccessMessage(): Promise<string> {
-        const result = await this.reviewForm.locator(".alert-success.alert").innerText()
-        return result
     }
 
     async isReviewSuccessPanelVisible(): Promise<boolean> {

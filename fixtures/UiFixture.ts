@@ -20,8 +20,6 @@ type UiFixtures = {
     checkoutPage: CheckoutPage;
     registrationPage: RegistrationPage;
     productDetailsPage: ProductDetailsPage;
-    userFactory: UserDataFactory;
-    productFactory: ProductFactory;
 }
 
 export const uiFixtures = apiFixtures.extend<UiFixtures>({

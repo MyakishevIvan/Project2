@@ -8,9 +8,7 @@ import {PaymentCard} from "../types";
 export class CheckoutPage extends BasePage {
     private readonly items: Locator;
     private readonly address: Locator;
-    private readonly billingAddress: Locator;
     private readonly totalPrices: Locator
-    private readonly textForm: Locator
     private readonly placeButton: Locator
     private readonly payButton: Locator;
     private readonly invoiceButton: Locator;
@@ -22,9 +20,7 @@ export class CheckoutPage extends BasePage {
         super(page);
         this.items = this.page.locator("#cart_info tbody tr")
         this.address = this.page.locator("#address_delivery .address_address1")
-        this.billingAddress = this.page.locator("#address_invoice .address_address1")
         this.totalPrices = this.page.locator(".cart_total_price")
-        this.textForm = this.page.locator(".form-control")
         this.placeButton = this.page.locator("a.check_out")
         this.payButton = this.page.getByTestId("pay-button")
         this.invoiceButton = this.page.getByRole("link", {name: "Download Invoice"})
@@ -39,17 +35,6 @@ export class CheckoutPage extends BasePage {
 
     async getDeliveryAddress(): Promise<string> {
         const locators = await this.address.all();
-        const result: string[] = [];
-
-        for (const locator of locators) {
-            const text = await locator.innerText();
-            result.push(text.trim());
-        }
-        return result.join("\r\n");
-    }
-
-    async getBillingAddress(): Promise<string> {
-        const locators = await this.billingAddress.all();
         const result: string[] = [];
 
         for (const locator of locators) {
@@ -76,10 +61,6 @@ export class CheckoutPage extends BasePage {
     async getOrderTotalPrice(): Promise<number> {
         const price = await this.totalPrices.last().innerText()
         return Number(price.split(".")[1].trim())
-    }
-
-    async enterComment(comment: string): Promise<void> {
-        await this.textForm.fill(comment);
     }
 
     async placeOrder(): Promise<void> {

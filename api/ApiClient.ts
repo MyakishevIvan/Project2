@@ -5,15 +5,15 @@ import { endpointConfig } from '../config/EndpointConfig';
 export class ApiClient {
     constructor(private readonly request: APIRequestContext) {}
 
-    async send<T>(
+    async send(
         name: EndpointName,
-        data?: T
+        data?: object
     ): Promise<APIResponse> {
         const endpoint = endpointConfig.get(name);
 
         return this.request.fetch(endpoint.endpoint, {
             method: endpoint.method,
-            data
+            form: data as Record<string, string | number | boolean> | undefined
         });
     }
 }

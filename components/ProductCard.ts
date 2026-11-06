@@ -1,5 +1,5 @@
 import {Locator} from "@playwright/test";
-import {ProductInfo} from "../types/ProductInfo";
+import {BaseProduct} from "../types/BaseProduct";
 
 export class ProductCard {
     private readonly productCart: Locator
@@ -10,7 +10,7 @@ export class ProductCard {
         this.textContainer = this.productCart.locator(".productinfo.text-center")
     }
 
-    async getProductInfo(): Promise<ProductInfo> {
+    async getProductInfo(): Promise<BaseProduct> {
         return {
             name: await this.getName(),
             price: await this.getPrice()

@@ -1,11 +1,11 @@
-import {ProductInfo} from "../types/ProductInfo";
-import {VerifiedUser} from "../types/VerifiedUser";
+import {BaseProduct} from "../types/BaseProduct";
+import {UserData} from "../types/UserData";
 import {uiFixtures} from "./UiFixture";
 
 
 type ScenarioFixtures = {
-    login: VerifiedUser;
-    addProduct: ProductInfo[]
+    login: UserData;
+    addProduct: BaseProduct[];
 };
 
 export const scenarioFixtures = uiFixtures.extend<ScenarioFixtures>({
@@ -20,7 +20,7 @@ export const scenarioFixtures = uiFixtures.extend<ScenarioFixtures>({
     addProduct: async ({productsPage}, use) => {
         await productsPage.open()
         const productCards = await productsPage.getProducts();
-        const productsInfo: ProductInfo[] = [];
+        const productsInfo: BaseProduct[] = [];
 
         for (const product of productCards.slice(0, 2)) {
             productsInfo.push(await product.getProductInfo());

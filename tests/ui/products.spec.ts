@@ -1,0 +1,113 @@
+import {test, expect} from "../../fixtures";
+
+
+test("should display a non-empty products list", async ({homePage, productsPage}) => {
+    await homePage.open()
+    await homePage.openProducts()
+    const productCount = await productsPage.getProductsCount();
+    expect(productCount).toBeGreaterThan(0)
+});
+
+test("successfully searching products", async ({
+                                                   productsPage,
+                                                   productFactory,
+                                                   productDetailsPage
+                                               }) => {
+
+    await test.step("should display matching products when searching by name", async () => {
+        const product = productFactory.create();
+        await productsPage.open()
+        await productsPage.search(product.name)
+        await test.step("Verify search results", async () => {
+            const productCards = await productsPage.getProducts();
+            expect(productCards).toHaveLength(1)
+            const name = await productCards[0].getName();
+            const price = await productCards[0].getPrice();
+            expect(name).toBe(product.name);
+            expect(price).toBe(product.price);
+        })
+
+        await test.step("Verify product details", async () => {
+            const productCards = await productsPage.getProducts();
+            await productCards[0].openDetails()
+            const brand = await productDetailsPage.getBrand();
+            const result = await productDetailsPage.getCategories();
+            expect(brand).toBe(product.brand);
+            expect(result.subcategory).toBe(product.category);
+        })
+    })
+});
+
+test("should display products belonging to the selected category and subcategory", async ({
+                                                                                              productsPage,
+                                                                                              productDetailsPage
+                                                                                          }) => {
+
+    await test.step("Select category", async () => {
+        await productsPage.open()
+        const categories = await productsPage.getAllCategories();
+        const selectedCategory = categories[0]
+        await productsPage.openCategory(selectedCategory);
+        await test.step("Select subcategory", async () => {
+            const subcategories = await productsPage.getAllSubcategory(selectedCategory);
+            const selectedSubcategory = subcategories[0]
+            await productsPage.openSubcategory(selectedCategory, selectedSubcategory);
+            await test.step("Open product details", async () => {
+                const productCards = await productsPage.getProducts();
+                await productCards[0].openDetails()
+            })
+            await test.step("Verify product categories", async () => {
+                const {category, subcategory} = await productDetailsPage.getCategories();
+                expect(category).toBe(selectedCategory);
+                expect(subcategory).toBe(selectedSubcategory);
+            })
+        })
+    })
+});
+
+test("should successfully add a product to the cart from the products list", async ({productsPage}) => {
+    await productsPage.open()
+    const productCards = await productsPage.getProducts();
+    await productCards[0].addToCart()
+    const hasSucceededPanel = await productsPage.hasSucceededCartPanel();
+    expect(hasSucceededPanel).toBeTruthy();
+})
+
+test("should add a product to the cart with the selected quantity from the product details page", async ({
+                                                                                                             productsPage,
+                                                                                                             productDetailsPage,
+                                                                                                             cartPage
+                                                                                                         }) => {
+    const expectedQuantity = 2;
+    const name = await test.step("Open product details", async () => {
+        await productsPage.open()
+        const productCards = await productsPage.getProducts();
+        const name = await productCards[0].getName();
+        await productCards[0].openDetails()
+        return name;
+    })
+    await test.step("Add product to cart with selected quantity", async () => {
+        await productDetailsPage.setQuantity(expectedQuantity);
+        await productDetailsPage.addToCart()
+        const hasSucceededPanel = await productDetailsPage.hasSucceededCartPanel();
+        expect(hasSucceededPanel).toBeTruthy();
+    })
+    await test.step("Verify product quantity in cart", async () => {
+        await cartPage.open()
+        const isCartEmpty = await cartPage.isEmpty();
+        expect(isCartEmpty).toBeFalsy();
+        const actualQuantity = await cartPage.getItemQuantity(name);
+        expect(actualQuantity).toBe(expectedQuantity);
+    })
+});
+
+test("should successfully submit a product review", async ({productsPage, productDetailsPage}) => {
+    await productsPage.open()
+    const productCards = await productsPage.getProducts();
+    await productCards[0].openDetails()
+    await productDetailsPage.addReview("Test", "test@gmail.com", "test review")
+    const isSuccessPanelVisible = await productDetailsPage.isReviewSuccessPanelVisible();
+    expect(isSuccessPanelVisible).toBeTruthy();
+});
+
+

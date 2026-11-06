@@ -4,18 +4,24 @@ import {ProductFactory} from "../factories/ProductFactory";
 import {TestData} from "../types";
 
 type DataFixture = {
+    userFactory: UserDataFactory;
+    productFactory: ProductFactory;
     testData: TestData;
 }
 
 export const dataFixtures = base.extend<DataFixture>({
-    testData: async ({}, use) => {
-        const userDataFactory = new UserDataFactory();
-        const productFactory = new ProductFactory();
+    userFactory: async ({}, use) => {
+        await use(new UserDataFactory());
+    },
+    productFactory: async ({}, use) => {
+        await use(new ProductFactory());
+    },
+    testData: async ({userFactory, productFactory}, use) => {
         const testData: TestData = {
-            verifiedUser: userDataFactory.createVerifiedUser(),
-            invalidUser: userDataFactory.createInvalidUser(),
-            validUser: userDataFactory.createValidUser(),
-            paymentCard: userDataFactory.createPaymentCard(),
+            verifiedUser: userFactory.createVerifiedUser(),
+            invalidUser: userFactory.createInvalidUser(),
+            validUser: userFactory.createValidUser(),
+            paymentCard: userFactory.createPaymentCard(),
             product: productFactory.create(),
         }
         await use(testData)

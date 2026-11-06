@@ -8,10 +8,18 @@ export class ProductsApi {
     }
 
     async getAll(): Promise<APIResponse> {
-        return await this.apiClient.send(EndpointName.GET_PRODUCTS)
+        return this.apiClient.send(EndpointName.GET_PRODUCTS)
     }
 
-    async search(productName: string):Promise<APIResponse> {
-        return await this.apiClient.send(EndpointName.SEARCH_PRODUCTS, productName);
+    async postProducts(): Promise<APIResponse> {
+        return this.apiClient.send(EndpointName.POST_PRODUCTS)
+    }
+
+    async search(productName?: string): Promise<APIResponse> {
+        return this.apiClient.send(EndpointName.SEARCH_PRODUCTS, {search_product: productName});
+    }
+
+    async getAllBrands(): Promise<APIResponse> {
+        return this.apiClient.send(EndpointName.GET_BRANDS)
     }
 }

@@ -1,15 +1,12 @@
 import {Locator, Page} from "@playwright/test";
-import {Footer} from "../components/Footer";
 import {BasePage} from "./BasePage";
 import routes from "../test-data/routes.json"
 
 export class CartPage extends BasePage {
-    private readonly footer: Footer;
     private readonly cartElements;
 
     constructor(page: Page) {
         super(page);
-        this.footer = new Footer(this.page);
         this.cartElements = this.page.locator("#cart_info_table tbody tr")
     }
 
@@ -71,15 +68,6 @@ export class CartPage extends BasePage {
         return Number(totalString.replace(/\D/g, ""))
     }
 
-    async getCartTotal(): Promise<number> {
-        let cartTotal: number = 0
-        for (const itemName of await this.getItemNames()) {
-            const itemTotal = await this.getItemTotal(itemName);
-            cartTotal += itemTotal
-        }
-        return cartTotal;
-    }
-
     async removeItem(name: string): Promise<void> {
         const item = await this.getItemByName(name);
         await item.locator(".cart_quantity_delete").click()
@@ -91,9 +79,5 @@ export class CartPage extends BasePage {
     async isEmpty(): Promise<boolean> {
         const items = await this.getItems();
         return items.length === 0
-    }
-
-    async subscribe(email: string): Promise<void> {
-        await this.footer.subscribe(email)
     }
 }
